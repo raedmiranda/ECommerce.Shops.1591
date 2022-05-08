@@ -30,11 +30,15 @@ namespace ECommerce.Shops.Controllers
         // POST: Tiendas/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Tienda entidad)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                bool creado = TiendaDAO.Instancia.Insertar(entidad);
+                if (creado)
+                    return RedirectToAction(nameof(Index));
+                else
+                    return View();
             }
             catch
             {
